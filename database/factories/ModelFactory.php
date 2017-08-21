@@ -24,23 +24,25 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 });
 
 $factory->define(App\Thread::class, function (Faker\Generator $faker) {
-    $user = factory(App\User::class)->create();
 
     return [
-        'user_id'   => $user->id,
+        'user_id'   => function() {
+            return factory(App\User::class)->create()->id;
+        },
         'title'     => $faker->sentence,
         'body'      => $faker->paragraph,
     ];
 });
 
 $factory->define(App\Reply::class, function (Faker\Generator $faker) {
-    $user = factory(App\User::class)->create();
-
-    $thread = factory(App\Thread::class)->create();
 
     return [
-        'user_id'   => $user->id,
-        'thread_id' => $thread->id,
+        'user_id'   => function() {
+            return factory(App\User::class)->create()->id;
+        },
+        'thread_id' => function() {
+            return factory(App\Thread::class)->create()->id;
+        },
         'body'      => $faker->paragraph,
     ];
 });
