@@ -14,12 +14,12 @@ class ParticipateInForumTest extends TestCase
     use DatabaseTransactions, DatabaseMigrations;
 
     /** @test */
-    public function unauthenticated_user_may_not_add_reply()
-    {
-        $this->expectException('Illuminate\Auth\AuthenticationException');
-
-        $this->post('/threads/1/replies', []);
-    }
+//    public function unauthenticated_user_may_not_add_reply()
+//    {
+//        $this->expectException('Illuminate\Auth\AuthenticationException');
+//
+//        $this->post('/threads/1/replies', []);
+//    }
 
     /** @test */
     public function an_authenticated_user_can_may_participate_in_forum_threads()
