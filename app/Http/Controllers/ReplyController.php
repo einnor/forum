@@ -17,11 +17,12 @@ class ReplyController extends Controller
     }
 
     /**
+     * @param $channel
      * @param Request $request
      * @param Thread $thread
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request, Thread $thread)
+    public function store($channel, Request $request, Thread $thread)
     {
         $thread->addReply([
             'body'      =>  $request->get('body'),
