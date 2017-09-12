@@ -17,6 +17,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/home', 'HomeController@index')->name('home');
+
 Route::get('/threads', 'ThreadController@index');
 Route::post('/threads', 'ThreadController@store');
 Route::get('/threads/create', 'ThreadController@create');
@@ -27,4 +29,5 @@ Route::post('/threads/{channel}/{thread}/replies', 'ReplyController@store');
 
 Route::post('/replies/{reply}/favorites', 'FavoriteController@store');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/profiles/{user}', 'ProfileController@show')->name('profile');
+
