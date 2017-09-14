@@ -57,6 +57,10 @@ class ReplyController extends Controller
 
         $reply->delete();
 
+        if(request()->wantsJson()) {
+            return response(['status' => 'Reply deleted']);
+        }
+
         return redirect()->back()->with('flash', 'Reply has been removed');
     }
 }
