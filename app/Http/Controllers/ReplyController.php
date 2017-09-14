@@ -38,6 +38,15 @@ class ReplyController extends Controller
             ->with('flash', 'Your reply has been recorded');
     }
 
+    public function update(Request $request, Reply $reply)
+    {
+        $this->authorize('update', $reply);
+
+        $reply->update([
+            'body' => $request->body
+        ]);
+    }
+
     /**
      * @param Reply $reply
      * @return \Illuminate\Http\RedirectResponse
