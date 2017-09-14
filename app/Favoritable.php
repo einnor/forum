@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 trait Favoritable
 {
 
+    protected static function bootFavoritable()
+    {
+        static::deleting(function($model) {
+            $model->favorites->each->delete();
+        });
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
@@ -37,7 +44,7 @@ trait Favoritable
     {
         $attributes = ['user_id' => $userId];
 
-        return $this->favorites()->where($attributes)->delete();
+        return $this->favorites()->where($attributes)->get()->each->delete();
     }
 
     /**
