@@ -8,6 +8,12 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <!-- Auth check -->
+    <meta name="signed-in" content="{{ Auth::check() }}">
+
+    <!-- Auth check -->
+    <meta name="user" content="{{ Auth::user() }}">
+
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
