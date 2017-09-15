@@ -29,15 +29,21 @@ class ReplyController extends Controller
             'body'      =>  'required'
         ]);
 
-        $thread->addReply([
+        $reply = $thread->addReply([
             'body'      =>  $request->get('body'),
             'user_id'   =>  auth()->id()
         ]);
+
+        if(request()->expectsJson()) return $reply->load('owner');
 
         return back()
             ->with('flash', 'Your reply has been recorded');
     }
 
+    /**
+     * @param Request $request
+     * @param Reply $reply
+     */
     public function update(Request $request, Reply $reply)
     {
         $this->authorize('update', $reply);
