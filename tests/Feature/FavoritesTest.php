@@ -40,7 +40,7 @@ class FavoritesTest extends TestCase
 
         $reply = create(Reply::class);
 
-        $reply->favorite();
+        $reply->favorite(auth()->id());
 
         $this->delete('/replies/' . $reply->id . '/favorites');
 
