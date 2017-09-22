@@ -34,5 +34,7 @@ Route::delete('/replies/{reply}', 'ReplyController@destroy');
 Route::post('/replies/{reply}/favorites', 'FavoriteController@store');
 Route::delete('/replies/{reply}/favorites', 'FavoriteController@destroy');
 
+Route::post('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionController@store');
+
 Route::get('/profiles/{user}', 'ProfileController@show')->name('profile');
 
