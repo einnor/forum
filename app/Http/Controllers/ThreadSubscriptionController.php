@@ -15,8 +15,21 @@ class ThreadSubscriptionController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * @param $channel
+     * @param Thread $thread
+     */
     public function store($channel, Thread $thread)
     {
         $thread->subscribe(auth()->id());
+    }
+
+    /**
+     * @param $channel
+     * @param Thread $thread
+     */
+    public function destroy($channel, Thread $thread)
+    {
+        $thread->unsubscribe(auth()->id());
     }
 }

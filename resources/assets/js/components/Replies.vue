@@ -39,7 +39,7 @@
 
             url: function(page) {
                 if(! page) {
-                    let query = locations.search.match(/page=(\d+)/);
+                    let query = location.search.match(/page=(\d+)/);
 
                     page = query ? query[1] : 1;
                 }
