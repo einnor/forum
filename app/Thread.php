@@ -126,4 +126,17 @@ class Thread extends Model
             ->where('user_id', auth()->id())
             ->exists();
     }
+
+    /**
+     * @param User|null $user
+     * @return bool
+     */
+    public function hasUpdatesFor(User $user = null)
+    {
+        $user = $user ?: auth()->user();
+
+        $key = $user->visitedThreadCacheKey($this);
+
+        return $this->updated_at > cache($key);
+    }
 }
