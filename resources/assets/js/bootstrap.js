@@ -50,7 +50,7 @@ if (signedIn) {
 let user = document.head.querySelector('meta[name="user"]');
 
 if (user) {
-    window.App.user = user.content;
+    window.App.user = JSON.parse(user.content);
 } else {
     console.error('There is no signed in user');
 }
