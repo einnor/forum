@@ -18,6 +18,11 @@ class ReplyController extends Controller
         $this->middleware('auth', ['except' => ['index']]);
     }
 
+    /**
+     * @param $channel
+     * @param Thread $thread
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
     public function index($channel, Thread $thread)
     {
         return $thread->replies()->paginate(10);
@@ -25,20 +30,16 @@ class ReplyController extends Controller
 
     /**
      * @param $channel
-     * @param Request $request
      * @param Thread $thread
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Spam $spam
+     * @return $this|\Illuminate\Http\RedirectResponse|\Illuminate\Database\Eloquent\Model
      */
-    public function store($channel, Request $request, Thread $thread, Spam $spam)
+    public function store($channel, Thread $thread, Spam $spam)
     {
-        $this->validate($request, [
-            'body'      =>  'required'
-        ]);
-
-        $spam->detect(request('body'));
+        $this->validateReply();
 
         $reply = $thread->addReply([
-            'body'      =>  $request->get('body'),
+            'body'      =>  request('body'),
             'user_id'   =>  auth()->id()
         ]);
 
@@ -49,15 +50,17 @@ class ReplyController extends Controller
     }
 
     /**
-     * @param Request $request
      * @param Reply $reply
+     * @param Spam $spam
      */
-    public function update(Request $request, Reply $reply)
+    public function update(Reply $reply, Spam $spam)
     {
         $this->authorize('update', $reply);
 
+        $this->validateReply();
+
         $reply->update([
-            'body' => $request->body
+            'body' => request('body')
         ]);
     }
 
@@ -76,5 +79,14 @@ class ReplyController extends Controller
         }
 
         return redirect()->back()->with('flash', 'Reply has been removed');
+    }
+
+    private function validateReply()
+    {
+        $this->validate(request(), [
+            'body'      =>  'required'
+        ]);
+
+        resolve(Spam::class)->detect(request('body'));
     }
 }
