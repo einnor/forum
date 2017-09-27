@@ -32,36 +32,42 @@ class ReplyController extends Controller
      * @param $channel
      * @param Thread $thread
      * @param Spam $spam
-     * @return $this|\Illuminate\Http\RedirectResponse|\Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function store($channel, Thread $thread, Spam $spam)
     {
-        $this->validateReply();
+        try{
+            $this->validateReply();
 
-        $reply = $thread->addReply([
-            'body'      =>  request('body'),
-            'user_id'   =>  auth()->id()
-        ]);
+            $reply = $thread->addReply([
+                'body'      =>  request('body'),
+                'user_id'   =>  auth()->id()
+            ]);
+        } catch (\Exception $e) {
+            return response('Sorry, your reply could not be saved at this time', 422);
+        }
 
-        if(request()->expectsJson()) return $reply->load('owner');
-
-        return back()
-            ->with('flash', 'Your reply has been recorded');
+        return $reply->load('owner');
     }
 
     /**
      * @param Reply $reply
      * @param Spam $spam
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
     public function update(Reply $reply, Spam $spam)
     {
         $this->authorize('update', $reply);
 
-        $this->validateReply();
+        try{
+            $this->validateReply();
 
-        $reply->update([
-            'body' => request('body')
-        ]);
+            $reply->update([
+                'body' => request('body')
+            ]);
+        } catch (\Exception $e) {
+            return response('Sorry, your reply could not be updated at this time', 422);
+        }
     }
 
     /**

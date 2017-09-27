@@ -68,8 +68,12 @@
         methods: {
             update: function() {
                 axios.patch('/replies/' + this.data.id, {
-                    body: this.body
-                });
+                        body: this.body
+                    })
+                    .then()
+                    .catch(error => {
+                        flash(error.response.data, 'danger');
+                    });
 
                 this.editing = false;
 
