@@ -45,6 +45,14 @@ class User extends Authenticatable
     }
 
     /**
+     * @return \Illuminate\Database\Query\Builder|static
+     */
+    public function lastReply()
+    {
+        return $this->hasOne(Reply::class)->latest();
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function activity()
