@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Reply;
-use App\Inspections\Spam;
 use App\Thread;
 use Illuminate\Http\Request;
 
@@ -31,13 +30,12 @@ class ReplyController extends Controller
     /**
      * @param $channel
      * @param Thread $thread
-     * @param Spam $spam
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function store($channel, Thread $thread, Spam $spam)
+    public function store($channel, Thread $thread)
     {
         try{
-            $this->validateReply();
+            $this->validate(request(), ['body' => 'required | spamfree']);
 
             $reply = $thread->addReply([
                 'body'      =>  request('body'),
@@ -52,12 +50,11 @@ class ReplyController extends Controller
 
     /**
      * @param Reply $reply
-     * @param Spam $spam
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-    public function update(Reply $reply, Spam $spam)
+    public function update(Reply $reply)
     {
-        $this->authorize('update', $reply);
+        $this->validate(request(), ['body' => 'required | spamfree']);
 
         try{
             $this->validateReply();
@@ -85,14 +82,5 @@ class ReplyController extends Controller
         }
 
         return redirect()->back()->with('flash', 'Reply has been removed');
-    }
-
-    private function validateReply()
-    {
-        $this->validate(request(), [
-            'body'      =>  'required'
-        ]);
-
-        resolve(Spam::class)->detect(request('body'));
     }
 }
