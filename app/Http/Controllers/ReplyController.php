@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePostRequest;
-use App\Notifications\YouWereMentioned;
 use App\Reply;
 use App\Thread;
-use App\User;
 
 class ReplyController extends Controller
 {
@@ -37,25 +35,7 @@ class ReplyController extends Controller
      */
     public function store($channel, Thread $thread, CreatePostRequest $form)
     {
-//        return $form->persist($thread);
-
-        $reply =  $thread->addReply([
-            'body'      =>  request('body'),
-            'user_id'   =>  auth()->id()
-        ]);
-
-        // Inspect the body of the reply for username mentions
-        preg_match_all('/\@([^\s\.]+)/', request('body'), $matches);
-
-        $names = $matches[0];
-
-        foreach ($names as $name) {
-            $user = User::whereIn('name', $name)->first();
-
-            $user->notify(new YouWereMentioned($reply));
-        }
-
-        return $reply->load('owner');
+        return $form->persist($thread);
     }
 
     /**

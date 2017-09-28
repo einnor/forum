@@ -2,16 +2,15 @@
 
 namespace App\Listeners;
 
-use App\Events\ThreadHasNewReply;
+use App\Events\ThreadReceivedNewReply;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class WhenThreadHasNewReply
+class NotifySubscribers
 {
     /**
      * Create the event listener.
-     *
-     * WhenThreadHasNewReply constructor.
+     * NotifySubscribers constructor.
      */
     public function __construct()
     {
@@ -21,12 +20,12 @@ class WhenThreadHasNewReply
     /**
      * Handle the event.
      *
-     * @param  ThreadHasNewReply  $event
+     * @param  ThreadReceivedNewReply  $event
      * @return void
      */
-    public function handle(ThreadHasNewReply $event)
+    public function handle(ThreadReceivedNewReply $event)
     {
-        $thread = $event->thread;
+        $thread = $event->reply->thread;
 
         $reply = $event->reply;
 

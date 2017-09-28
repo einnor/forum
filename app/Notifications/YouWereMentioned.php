@@ -22,7 +22,7 @@ class YouWereMentioned extends Notification
      *
      * @param Reply $reply
      */
-    public function __construct(Reply $reply)
+    public function __construct($reply)
     {
         $this->reply = $reply;
     }

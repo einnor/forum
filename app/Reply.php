@@ -53,8 +53,21 @@ class Reply extends Model
         return $this->created_at->gt(Carbon::now()->subMinute());
     }
 
+    /**
+     * @return string
+     */
     public function path()
     {
         return $this->thread->path() . "#reply-{$this->id}";
+    }
+
+    /**
+     * @return mixed
+     */
+    public function mentionedUsers()
+    {
+        preg_match_all('/\@([^\s\.]+)/', $this->body, $matches);
+
+        return $matches[1];
     }
 }
