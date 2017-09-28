@@ -40,21 +40,14 @@ class ReplyController extends Controller
 
     /**
      * @param Reply $reply
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
     public function update(Reply $reply)
     {
+        $this->authorize('update', $reply);
+
         $this->validate(request(), ['body' => 'required | spamfree']);
 
-        try{
-            $this->validateReply();
-
-            $reply->update([
-                'body' => request('body')
-            ]);
-        } catch (\Exception $e) {
-            return response('Sorry, your reply could not be updated at this time', 422);
-        }
+        $reply->update(['body' => request('body')]);
     }
 
     /**
