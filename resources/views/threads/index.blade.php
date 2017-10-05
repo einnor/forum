@@ -16,7 +16,13 @@
                     </div>
 
                     <div class="panel-body">
-
+                        <ul class="list-group">
+                            @foreach($trending as $thread)
+                                <li class="list-group-item">
+                                    <a href="{{ url($thread->url) }}">{{ $thread->title }}</a>
+                                </li>
+                            @endforeach
+                        </ul>
                     </div>
                 </div>
             </div>

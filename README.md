@@ -20,3 +20,4 @@ This is a fully Test-Driven RESTful API-based forum application developed using 
 - `Vue.js`
 - `Axios`
 - `Moment`
+- `Redis`

@@ -30,7 +30,10 @@ class ThreadController extends Controller
 
         if(request()->wantsJson()) return $threads;
 
-        return view('threads.index', compact('threads'));
+        // Get the top 5 most trending threads
+        $trending = array_map('json_decode', Redis::zrevrange('trending_threads', 0, 4));
+
+        return view('threads.index', compact('threads', 'trending'));
     }
 
     /**
