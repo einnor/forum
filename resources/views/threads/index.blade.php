@@ -15,7 +15,7 @@
                         Trending Threads
                     </div>
 
-                    @if($trending->count())
+                    @if(count($trending))
                         <div class="panel-body">
                             <ul class="list-group">
                                 @foreach($trending as $thread)
