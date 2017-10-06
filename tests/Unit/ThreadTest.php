@@ -5,11 +5,9 @@ namespace Tests\Unit;
 use App\Channel;
 use App\Notifications\ThreadWasUpdated;
 use App\Thread;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ThreadTest extends TestCase
 {
@@ -136,5 +134,19 @@ class ThreadTest extends TestCase
         $thread->subscribe();
 
         $this->assertTrue($thread->isSubscribedTo);
+    }
+
+    /** @test */
+    public function a_thread_records_each_visit()
+    {
+        $thread = create(Thread::class, ['id' => 1]);
+
+        $thread->resetVisits();
+
+        $this->assertEquals(0, $thread->visits());
+
+        $thread->recordVisit();
+
+        $this->assertEquals(0, $thread->visits());
     }
 }
