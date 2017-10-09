@@ -139,14 +139,14 @@ class ThreadTest extends TestCase
     /** @test */
     public function a_thread_records_each_visit()
     {
-        $thread = create(Thread::class, ['id' => 1]);
+        $thread = create(Thread::class, ['id' => 10]);
 
-        $thread->resetVisits();
+        $thread->visits()->reset();
 
-        $this->assertEquals(0, $thread->visits());
+        $this->assertEquals(0, $thread->visits()->count());
 
-        $thread->recordVisit();
+        $thread->visits()->record();
 
-        $this->assertEquals(0, $thread->visits());
+        $this->assertEquals(1, $thread->visits()->count());
     }
 }
