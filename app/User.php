@@ -36,6 +36,10 @@ class User extends Authenticatable
         'password', 'remember_token', 'email'
     ];
 
+    protected $casts = [
+        'confirmed' => 'boolean'
+    ];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
