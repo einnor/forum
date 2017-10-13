@@ -23,14 +23,20 @@ class CreateThreadsTest extends TestCase
 
         $thread = make(Thread::class);
 
-        $this->post('/threads', $thread->toArray());
+        $this->post(route('threads'), $thread->toArray());
     }
 
     /** @test */
-    public function authenticated_users_must_first_confirm_their_email_address_before_creating_threads()
+    public function new_users_must_first_confirm_their_email_address_before_creating_threads()
     {
-        $this->publishThread()
-            ->assertRedirect('/threads')
+        $user = factory(User::class)->states('unconfirmed')->create();
+
+        $this->signIn($user);
+
+        $thread = make(Thread::class);
+
+        $this->post(route('threads'), $thread->toArray())
+            ->assertRedirect(route('threads'))
             ->assertSessionHas('flash');
     }
     
@@ -39,7 +45,7 @@ class CreateThreadsTest extends TestCase
     {
 //        $this->withExceptionHandling()
 //            ->get('/threads/create')
-//            ->assertRedirect('/login');
+//            ->assertRedirect(route('login'));
     }
 
     /** @test */
@@ -47,7 +53,7 @@ class CreateThreadsTest extends TestCase
     {
         $this->expectException('Illuminate\Auth\AuthenticationException');
 
-        $this->post('/threads', []);
+        $this->post(route('threads'), []);
     }
 
     /** @test */
@@ -57,7 +63,7 @@ class CreateThreadsTest extends TestCase
 
         $thread = make(Thread::class);
 
-        $response = $this->post('/threads', $thread->toArray());
+        $response = $this->post(route('threads'), $thread->toArray());
 
         $this->get($response->headers->get('Location'))
             ->assertSee($thread->title)
@@ -101,7 +107,7 @@ class CreateThreadsTest extends TestCase
 
         $thread = make(Thread::class, $overrides);
 
-        return $this->post('/threads', $thread->toArray());
+        return $this->post(route('threads'), $thread->toArray());
     }
 
     /** @test */
@@ -111,7 +117,7 @@ class CreateThreadsTest extends TestCase
 
         $thread = create(Thread::class);
 
-        $this->delete($thread->path())->assertRedirect('/login');
+        $this->delete($thread->path())->assertRedirect(route('login'));
 
         $this->signIn();
 
