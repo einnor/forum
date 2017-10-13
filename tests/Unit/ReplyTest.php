@@ -49,6 +49,6 @@ class ReplyTest extends TestCase
             'body' => 'Hello @JaneDoe.'
         ]);
 
-        $this->assertEquals('Hello <a href="/profiles/JaneDoe">@JaneDoe</a>.', $reply->mentionedUsers());
+        $this->assertEquals('Hello <a href="/profiles/JaneDoe">@JaneDoe</a>.', $reply->body);
     }
 }
