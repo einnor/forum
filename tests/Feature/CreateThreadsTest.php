@@ -82,7 +82,7 @@ class CreateThreadsTest extends TestCase
     {
         $this->signIn();
 
-        $thread = create(Thread::class, ['title' => 'Foo Bar', 'slug' => 'foo-bar']);
+        $thread = create(Thread::class, ['title' => 'Foo Bar']);
 
         $this->assertEquals($thread->fresh()->slug, 'foo-bar');
 
@@ -93,6 +93,18 @@ class CreateThreadsTest extends TestCase
         $this->post(route('threads'), $thread->toArray());
 
         $this->assertTrue(Thread::whereSlug('foo-bar-3')->exists());
+    }
+
+    /** @test */
+    public function a_thread_with_a_title_that_ends_with_a_number_should_generate_the_proper_slug()
+    {
+        $this->signIn();
+
+        $thread = create(Thread::class, ['title' => 'Foo Bar 24', 'slug' => 'foo-bar-24']);
+
+        $this->post(route('threads'), $thread->toArray());
+
+        $this->assertTrue(Thread::whereSlug('foo-bar-24-2')->exists());
     }
 
     /** @test */
