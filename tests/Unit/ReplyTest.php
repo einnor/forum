@@ -36,7 +36,7 @@ class ReplyTest extends TestCase
     public function it_can_detect_all_mentioned_users_in_the_body()
     {
         $reply = new Reply([
-            'body' => 'Hello @JaneDoe.'
+            'body' => 'Hello @JaneDoe from @JohnDoe.'
         ]);
 
         $this->assertEquals(['JaneDoe', 'JohnDoe'], $reply->mentionedUsers());

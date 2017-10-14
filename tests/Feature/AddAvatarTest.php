@@ -48,6 +48,6 @@ class AddAvatarTest extends TestCase
 
         $this->assertEquals(asset("avatars/{$file->hashName()}"), auth()->user()->avatar_path);
 
-        Storage::disk('public')->assertExists("avatars/{$file->hashName()}.jpg");
+        Storage::disk('public')->assertExists("avatars/{$file->hashName()}");
     }
 }
