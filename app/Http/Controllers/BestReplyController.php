@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreatePostRequest;
 use App\Reply;
-use App\Thread;
 
 class BestReplyController extends Controller
 {
