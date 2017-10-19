@@ -1,9 +1,9 @@
 let user = window.App.user;
 
 let authorizations = {
-    updateReply: function (reply) {
-        return reply.user_id === user.id;
-    }
+    owns: function (model, prop = 'user_id') {
+        return model[prop] === user.id;
+    },
 };
 
 module.exports = authorizations;
