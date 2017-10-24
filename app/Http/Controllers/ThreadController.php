@@ -109,15 +109,18 @@ class ThreadController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Thread  $thread
+     * @param $channel
+     * @param  \App\Thread $thread
      * @return \Illuminate\Http\Response
      */
-    public function update(Thread $thread)
+    public function update($channel, Thread $thread)
     {
         if(request()->has('locked')) {
             if(! auth()->user()->isAdmin()) {
-                return response('', 403);
+                return response('You do not have permission to lock this thread', 403);
             }
+
+            $thread->lock();
         }
     }
 

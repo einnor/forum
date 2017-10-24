@@ -73,6 +73,14 @@ class User extends Authenticatable
     }
 
     /**
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return in_array($this->name, ['JohnDoe', 'Ronnie Nyaga']);
+    }
+
+    /**
      * @param Thread $thread
      * @return string
      */
