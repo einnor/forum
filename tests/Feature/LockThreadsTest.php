@@ -27,7 +27,7 @@ class LockThreadsTest extends TestCase
     }
 
     /** @test */
-    public function onve_locked_a_thread_may_not_receive_new_replies()
+    public function once_locked_a_thread_may_not_receive_new_replies()
     {
         $this->signIn();
 

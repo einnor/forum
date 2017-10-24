@@ -109,13 +109,16 @@ class ThreadController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Thread $thread)
+    public function update(Thread $thread)
     {
-        //
+        if(request()->has('locked')) {
+            if(! auth()->user()->isAdmin()) {
+                return response('', 403);
+            }
+        }
     }
 
     /**
