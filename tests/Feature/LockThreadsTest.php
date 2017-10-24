@@ -19,7 +19,7 @@ class LockThreadsTest extends TestCase
 
         $thread = create(Thread::class, ['user_id' => auth()->id()]);
 
-        $this->patch($thread->path(), [
+        $this->post(route('locked-threads.store'), [
             'locked'    =>  true,
         ])->assertStatus(403);
 
@@ -34,7 +34,7 @@ class LockThreadsTest extends TestCase
 
         $thread = create(Thread::class, ['user_id' => auth()->id()]);
 
-        $this->patch($thread->path(), [
+        $this->post(route('locked-threads.store'), [
             'locked'    =>  true,
         ]);
 

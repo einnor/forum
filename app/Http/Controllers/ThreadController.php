@@ -115,13 +115,7 @@ class ThreadController extends Controller
      */
     public function update($channel, Thread $thread)
     {
-        if(request()->has('locked')) {
-            if(! auth()->user()->isAdmin()) {
-                return response('You do not have permission to lock this thread', 403);
-            }
-
-            $thread->lock();
-        }
+        //
     }
 
     /**
