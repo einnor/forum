@@ -45,7 +45,8 @@
                                 {{ str_plural('reply', $thread->replies_count) }}.
                             </p>
                             <p>
-                                <subscribe-button :active="{{ json_encode($thread->isSubscribedTo) }}"></subscribe-button>
+                                <subscribe-button :active="{{ json_encode($thread->isSubscribedTo) }}" v-if="signedIn"></subscribe-button>
+                                <button class="btn btn-default" v-if="authorize('isAdmin')">Lock</button>
                             </p>
                         </div>
                     </div>
