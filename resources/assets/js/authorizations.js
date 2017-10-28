@@ -5,7 +5,7 @@ let authorizations = {
         return model[prop] === user.id;
     },
 
-    isAdmin: function() {
+    isAdmin: function(model) {
         return ['JohnDoe', 'RonnieNyaga'].includes(user.name);
     }
 };
