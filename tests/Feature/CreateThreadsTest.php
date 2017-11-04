@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Activity;
 use App\Channel;
 use App\Reply;
+use App\Rules\Recaptcha;
 use App\Thread;
 use App\User;
 use Tests\TestCase;
@@ -15,6 +16,18 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 class CreateThreadsTest extends TestCase
 {
     use DatabaseMigrations;
+
+    public function setUp()
+    {
+        parent::setUp();
+
+        app()->singleton(Recaptcha::class, function () {
+            $mock = \Mockery::mock(Recaptcha::class);
+            $mock->shouldReceive('passes')->andReturn(true);
+
+            return $mock;
+        });
+    }
     
     /** @test */
     public function guests_may_not_create_threads()
@@ -129,6 +142,8 @@ class CreateThreadsTest extends TestCase
     /** @test */
     public function a_thread_requires_recaptcha_verification()
     {
+        unset(app()[Recaptcha::class]);
+
         $$this->publishThread(['g-recaptcha-response' => 'test'])
             ->assertSessionHasErrors('g-recaptcha-response');
     }
