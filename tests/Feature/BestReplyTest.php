@@ -24,7 +24,7 @@ class BestReplyTest extends TestCase
 
         $this->assertFalse($replies[1]->isBest());
 
-        $this->postJson(route('best-reply.store', [$replies[1]->id]));
+        $this->postJson(route('best-replies.store', [$replies[1]->id]));
 
         $this->assertTrue($replies[1]->fresh()->isBest());
     }
@@ -40,7 +40,7 @@ class BestReplyTest extends TestCase
 
         $this->signIn(create(User::class));
 
-        $this->postJson(route('best-reply.store', [$reply->id]))->assertStatus(403);
+        $this->postJson(route('best-replies.store', [$reply->id]))->assertStatus(403);
 
         $this->assertFalse($reply->fresh()->isBest());
     }
@@ -54,7 +54,7 @@ class BestReplyTest extends TestCase
 
         $reply->thread->markBestReply($reply);
 
-        $this->postJson(route('replies.destroy', $reply));
+        $this->deleteJson(route('replies.destroy', $reply));
 
         $this->assertNull($reply->thread->fresh()->best_reply_id);
     }
