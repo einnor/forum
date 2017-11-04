@@ -126,6 +126,13 @@ class CreateThreadsTest extends TestCase
             ->assertSessionHasErrors('channel_id');
     }
 
+    /** @test */
+    public function a_thread_requires_recaptcha_verification()
+    {
+        $$this->publishThread(['g-recaptcha-response' => 'test'])
+            ->assertSessionHasErrors('g-recaptcha-response');
+    }
+
     /**
      * @param array $overrides
      * @return \Illuminate\Foundation\Testing\TestResponse

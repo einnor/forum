@@ -4,13 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Channel;
 use App\Filters\ThreadFilters;
+use App\Rules\Recaptcha;
 use App\Thread;
 use App\Trending;
 use Illuminate\Http\Request;
-use Zttp\Zttp;
 
 class ThreadController extends Controller
 {
+    public function setUp()
+    {
+        parent::setUp();
+
+        app()->singleton(Recaptcha::class, function () {
+            $mock = \Mockery::mock(Recaptcha::class);
+            $mock->shouldReceive('passes')->once()->andReturn(true);
+
+            return $mock;
+        });
+    }
 
     public function __construct()
     {
@@ -57,20 +68,11 @@ class ThreadController extends Controller
     {
 
         $this->validate($request, [
-            'title'     =>  'required | spamfree',
-            'body'      =>  'required | spamfree',
-            'channel_id'=>  'required|exists:channels,id',
+            'title'                 =>  'required | spamfree',
+            'body'                  =>  'required | spamfree',
+            'channel_id'            =>  'required | exists:channels,id',
+            'g-recaptcha-response'  =>  ['required', new Recaptcha()]
         ]);
-
-        $response = Zttp::asFormParams()->post('https://www.google.com/recaptcha/api/siteverify', [
-            'secret'    =>  config('services.recaptcha.secret'),
-            'response'  =>  $request->input('g-recaptcha-response'),
-            'remoteip'  =>  $_SERVER['REMOTE_ADDR']
-        ]);
-
-        if(! $response->json()['success']) {
-            throw new \Exception('Recaptcha failed');
-        }
 
         $thread = new Thread();
 
