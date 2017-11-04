@@ -23,7 +23,7 @@ class RegistrationTest extends TestCase
 
         event(new Registered($user));
 
-        Mail::assertSent(PleaseConfirmYourEmail::class);
+        Mail::assertQueued(PleaseConfirmYourEmail::class);
     }
 
     /** @test */
