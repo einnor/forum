@@ -87,11 +87,11 @@ class CreateThreadsTest extends TestCase
 
         $this->assertEquals($thread->fresh()->slug, 'foo-bar');
 
-        $this->postJson(route('threads'), $thread->toArray() + ['g-recaptch-response' => 'token']);
+        $this->postJson(route('threads'), $thread->toArray() + ['g-recaptcha-response' => 'token']);
 
         $this->assertTrue(Thread::whereSlug('foo-bar-2')->exists());
 
-        $this->postJson(route('threads'), $thread->toArray() + ['g-recaptch-response' => 'token']);
+        $this->postJson(route('threads'), $thread->toArray() + ['g-recaptcha-response' => 'token']);
 
         $this->assertTrue(Thread::whereSlug('foo-bar-3')->exists());
     }
@@ -103,7 +103,7 @@ class CreateThreadsTest extends TestCase
 
         $thread = create(Thread::class, ['title' => 'Foo Bar 24', 'slug' => 'foo-bar-24']);
 
-        $this->postJson(route('threads'), $thread->toArray() + ['g-recaptch-response' => 'token']);
+        $this->postJson(route('threads'), $thread->toArray() + ['g-recaptcha-response' => 'token']);
 
         $this->assertTrue(Thread::whereSlug('foo-bar-24-2')->exists());
     }
@@ -147,7 +147,7 @@ class CreateThreadsTest extends TestCase
 
         $thread = make(Thread::class, $overrides);
 
-        return $this->post(route('threads'), $thread->toArray() + ['g-recaptch-response' => 'token']);
+        return $this->post(route('threads'), $thread->toArray() + ['g-recaptcha-response' => 'token']);
     }
 
     /** @test */
