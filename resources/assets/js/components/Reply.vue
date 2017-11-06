@@ -51,7 +51,7 @@
 
         data() {
             return {
-                id: this.id,
+                id: this.reply.id,
                 editing: false,
                 body: this.reply.body,
                 isBest: this.reply.isBest,
