@@ -151,6 +151,22 @@ class CreateThreadsTest extends TestCase
     }
 
     /** @test */
+    public function a_thread_can_be_updated()
+    {
+        $this->signIn();
+
+        $thread = create(Thread::class, ['user_id' => auth()->id()]);
+
+        $this->patchJson($thread->path(), [
+            'title' =>  'Changed Title',
+            'body'  =>  'Changed body',
+        ]);
+
+        $this->assertEquals('Changed Title', $thread->fresh()->title);
+        $this->assertEquals('Changed body', $thread->body);
+    }
+
+    /** @test */
     public function unauthorized_users_may_not_delete_threads()
     {
         $this->withExceptionHandling();

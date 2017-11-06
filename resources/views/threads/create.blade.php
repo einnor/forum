@@ -29,7 +29,7 @@
                                 <input name="title" id="title" class="form-control" value="{{ old('title') }}" required />
                             </div>
                             <div class="form-group">
-                                <label for="body">Title:</label>
+                                <label for="body">Body:</label>
                                 <textarea name="body" id="body" class="form-control" rows="8" required>{{ old('body') }}</textarea>
                             </div>
                             <div class="form-group">
