@@ -66,9 +66,9 @@ class ThreadController extends Controller
 
         $thread->fill([
             'user_id'   =>  auth()->id(),
-            'channel_id'=>  $request->channel_id,
-            'title'     =>  $request->title,
-            'body'      =>  $request->body,
+            'channel_id'=>  request('channel_id'),
+            'title'     =>  request('title'),
+            'body'      =>  request('body'),
         ]);
         $thread->save();
 
@@ -124,6 +124,8 @@ class ThreadController extends Controller
         ]);
 
         $thread->update($data);
+
+        return response(['data' => $thread], 202);
     }
 
     /**

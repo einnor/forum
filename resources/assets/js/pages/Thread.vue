@@ -13,15 +13,39 @@
             return {
                 repliesCount: this.thread.replies_count,
                 locked: this.thread.locked,
-                editing: false
+                editing: false,
+                title: this.thread.title,
+                body: this.thread.body,
             }
         },
 
         methods: {
             toggleLock: function () {
-                axios[this.locked ? 'delete' : 'post']('/locked-threads/' + this.thread.slug).then(res => {});
+                let uri = `/locked-threads/${this.thread.slug}`;
+
+                axios[this.locked ? 'delete' : 'post'](uri);
 
                 this.locked = ! this.locked;
+            },
+
+            cancel: function () {
+                this.title = this.thread.title;
+                this.body = this.thread.body;
+                this.editing = false
+            },
+
+            update: function () {
+                let uri = `/threads/${this.thread.channel.slug}/${this.thread.slug}`;
+
+                axios.patch(uri, {
+                    title:  this.title,
+                    body:   this.body
+                }).then((res) => {
+                    this.editing = false;
+                    this.title = res.data.data.title;
+                    this.body = res.data.data.body;
+                    flash('Your thread has been updated');
+                });
             }
         }
     }
