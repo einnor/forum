@@ -12,6 +12,8 @@ This is a fully Test-Driven RESTful API-based forum application developed using 
 - `Thread filtering and Searching`
 - `Logging activities`
 - `Authentication and Authorization`
+- `Recaptcha`
+- `Full-text searching`
 
 ## Technologies
 - `PHPUnit, Faker, Mockery`
@@ -21,3 +23,5 @@ This is a fully Test-Driven RESTful API-based forum application developed using 
 - `Axios`
 - `Moment`
 - `Redis`
+- `Google Recaptcha`
+- `Scout and Algolia`
