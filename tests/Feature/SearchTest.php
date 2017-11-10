@@ -18,6 +18,6 @@ class SearchTest extends TestCase
 
         $results = $this->getJson("/threads/search?q={$search}")->json();
 
-        $this->assertCount(2, $results);
+        $this->assertCount(2, $results['data']);
     }
 }

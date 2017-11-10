@@ -11,6 +11,6 @@ class SearchController extends Controller
     {
         $search = request('q');
 
-        return Thread::search($search)->get();
+        return Thread::search($search)->paginate(25);
     }
 }
