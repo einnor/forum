@@ -12,6 +12,23 @@
             <div class="col-md-4">
                 <div class="panel panel-default">
                     <div class="panel-heading">
+                        Search
+                    </div>
+
+                    <div class="panel-body">
+                        <form method="GET" action="/threads/search">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search for something..." name="q">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Search</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
                         Trending Threads
                     </div>
 
