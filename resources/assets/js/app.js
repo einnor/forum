@@ -7,9 +7,7 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue');
-
-let authorizations = require('./authorizations')
+let authorizations = require('./authorizations');
 
 Vue.prototype.authorize = function (...params) {
     if(! window.App.signedIn) return false;

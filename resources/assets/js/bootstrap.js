@@ -1,6 +1,8 @@
 
 window._ = require('lodash');
 
+import InstantSearch from 'vue-instantsearch';
+
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
  * for JavaScript based Bootstrap features such as modals and tabs. This
@@ -12,6 +14,15 @@ try {
 
     require('bootstrap-sass');
 } catch (e) {}
+
+/**
+ * Vue is a modern JavaScript library for building interactive web interfaces
+ * using reactive data binding and reusable components. Vue's API is clean
+ * and simple, leaving you to focus your next great project
+ */
+window.Vue = require('vue');
+
+Vue.use(InstantSearch);
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
