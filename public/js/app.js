@@ -82323,27 +82323,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('div', {
     staticClass: "form-group"
-  }, [_c('textarea', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
+  }, [_c('wysiwyg', {
+    model: {
       value: (_vm.body),
+      callback: function($$v) {
+        _vm.body = $$v
+      },
       expression: "body"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "required": ""
-    },
-    domProps: {
-      "value": (_vm.body)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.body = $event.target.value
-      }
     }
-  })]), _vm._v(" "), _c('button', {
+  })], 1), _vm._v(" "), _c('button', {
     staticClass: "btn-xs btn-primary",
     attrs: {
       "type": "submit"
@@ -82458,13 +82446,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -82473,7 +82454,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            body: ''
+            body: '',
+            completed: false
         };
     },
     mounted: function mounted() {
@@ -82497,6 +82479,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             axios.post(location.pathname + '/replies', { body: this.body }).then(function (response) {
                 _this.body = '';
+                _this.completed = true;
 
                 flash('Your reply has been posted');
 
@@ -84172,31 +84155,20 @@ $.fn.atwho.debug = false;
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [(_vm.signedIn) ? _c('div', [_c('div', {
     staticClass: "form-group"
-  }, [_c('textarea', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.body),
-      expression: "body"
-    }],
-    staticClass: "form-control",
+  }, [_c('wysiwyg', {
     attrs: {
       "name": "body",
-      "id": "body",
       "placeholder": "Have something to say?",
-      "rows": "5",
-      "required": ""
+      "shouldCLear": _vm.completed
     },
-    domProps: {
-      "value": (_vm.body)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.body = $event.target.value
-      }
+    model: {
+      value: (_vm.body),
+      callback: function($$v) {
+        _vm.body = $$v
+      },
+      expression: "body"
     }
-  })]), _vm._v(" "), _c('button', {
+  })], 1), _vm._v(" "), _c('button', {
     staticClass: "btn btn-default",
     attrs: {
       "type": "button"
@@ -84451,13 +84423,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
-    props: ['name', 'value'],
+    props: ['name', 'value', 'placeholder', 'shouldClear'],
 
     mounted: function mounted() {
         var _this = this;
 
-        this.$ref.trix.addEventListener('trix-change', function (e) {
+        this.$refs.trix.addEventListener('trix-change', function (e) {
             _this.$emit('input', e.target.innerHTML);
+        });
+
+        this.$watch('shouldClear', function () {
+            _this.$refs.trix.value = '';
         });
     }
 });
@@ -84771,7 +84747,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _vm._v(" "), _c('trix-editor', {
     ref: "trix",
     attrs: {
-      "input": "trix"
+      "input": "trix",
+      "placeholder": _vm.placeholder
     }
   })], 1)
 },staticRenderFns: []}

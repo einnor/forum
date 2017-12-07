@@ -10,7 +10,7 @@
 
     <div class="panel-body">
         <div class="form-group">
-            <wysiwyg :name="body" v-model="form.body" :value="form.body"></wysiwyg>
+            <wysiwyg name="body" v-model="form.body" :value="form.body"></wysiwyg>
         </div>
     </div>
 
