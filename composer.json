@@ -9,7 +9,7 @@
         "algolia/algoliasearch-client-php": "^1.23",
         "kitetail/zttp": "^0.3.0",
         "laravel/framework": "5.5.*",
-        "laravel/scout": "^3.0",
+        "laravel/scout": "^7.1",
         "laravel/tinker": "~1.0",
         "predis/predis": "^1.1"
     },
